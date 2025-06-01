@@ -1,20 +1,7 @@
 export function generateFullDeck() {
-    const suits = ['H', 'D', 'C', 'S']; // Hearts, Diamonds, Clubs, Spades
-    const ranks = [
-        {name: '2', value: 1},
-        {name: '3', value: 2},
-        {name: '4', value: 3},
-        {name: '5', value: 4},
-        {name: '6', value: 5},
-        {name: '7', value: 6},
-        {name: '8', value: 7},
-        {name: '9', value: 8},
-        {name: '10', value: 9},
-        {name: 'J', value: 10},
-        {name: 'Q', value: 11},
-        {name: 'K', value: 12},
-        {name: 'A', value: 13}
-    ];
+    // Example: returns an array of card objects with id, suit, rank, imagePath
+    const suits = ['H', 'D', 'S', 'C'];
+    const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     let deck = [];
     let id = 1;
     for (const suit of suits) {
@@ -22,12 +9,12 @@ export function generateFullDeck() {
             deck.push({
                 id: id++,
                 suit,
-                rank: rank.name,
-                imagePath: `/images/${suit}${rank.name}.png`
+                rank,
+                imagePath: `images/${suit}${rank}.png`
             });
         }
     }
     return deck;
 }
 
-export const cardBackImgPath = '/images/back.png';
+export const cardBackImgPath = 'images/back.png';

@@ -1,49 +1,40 @@
-import { cardBackImgPath } from './cardData.js'
-import { addCardToGridCell } from './cardGrid.js'
+import { cardBackImgPath } from './cardData.js';
 
 export function createCards(cardArray){
-    cardArray.forEach((cardItem, index)=>{
-        createCard(cardItem, index);
-    });
+    return cardArray.map((cardItem, index) => createCard(cardItem, index));
 }
 
 function createCard(cardItem, index) {
-    const cardElem = createElement('div')
-    const cardInnerElem = createElement('div')
-    const cardFrontElem = createElement('div')
-    const cardBackElem = createElement('div')
+    const cardElem = document.createElement('div');
+    const cardInnerElem = document.createElement('div');
+    const cardFrontElem = document.createElement('div');
+    const cardBackElem = document.createElement('div');
 
-    const cardFrontImg = createElement('img')
-    const cardBackImg = createElement('img')
+    const cardFrontImg = document.createElement('img');
+    const cardBackImg = document.createElement('img');
 
-    addClassToElement(cardElem, 'card')
-    addIdToElement(cardElem, cardItem.id)
+    cardElem.classList.add('card');
+    cardElem.id = cardItem.id;
 
-    addClassToElement(cardInnerElem, 'card-inner')
-    addClassToElement(cardFrontElem, 'card-front')
-    addClassToElement(cardBackElem, 'card-back')
+    cardInnerElem.classList.add('card-inner');
+    cardFrontElem.classList.add('card-front');
+    cardBackElem.classList.add('card-back');
 
-    addSrcToImageElement(cardBackImg, cardBackImgPath)
-    addSrcToImageElement(cardFrontImg, cardItem.imagePath)
+    cardBackImg.src = cardBackImgPath;
+    cardFrontImg.src = cardItem.imagePath;
 
-    addClassToElement(cardBackImg, 'card-img')
-    addClassToElement(cardFrontImg, 'card-img')
+    cardBackImg.classList.add('card-img');
+    cardFrontImg.classList.add('card-img');
 
-    cardBackElem.appendChild(cardBackImg)
-    cardFrontElem.appendChild(cardFrontImg)
+    cardBackElem.appendChild(cardBackImg);
+    cardFrontElem.appendChild(cardFrontImg);
 
-    cardInnerElem.appendChild(cardFrontElem)
-    cardInnerElem.appendChild(cardBackElem)
+    cardInnerElem.appendChild(cardFrontElem);
+    cardInnerElem.appendChild(cardBackElem);
 
-    cardElem.appendChild(cardInnerElem)
-
-    addCardToGridCell(cardElem, index);
+    cardElem.appendChild(cardInnerElem);
+    return cardElem;
 }
-
-function createElement(elemType){ return document.createElement(elemType); }
-function addClassToElement(elem, className) { elem.classList.add(className); }
-function addIdToElement(elem, id) { elem.id = id; }
-function addSrcToImageElement(elem, src) { elem.src = src; }
 
 export function flipCard(card, flipToBack) {
     const inner = card.querySelector('.card-inner');
@@ -58,6 +49,13 @@ export function flipCards(cards, flipToBack) {
     cards.forEach(card => flipCard(card, flipToBack));
 }
 
-export function addChildElement(parentElem, childElem) {
-    parentElem.appendChild(childElem);
+export function getCardValue(rank) {
+    return parseInt(rank, 10) ||
+        (rank === 'A' ? 14 : rank === 'J' ? 11 : rank === 'Q' ? 12 : rank === 'K' ? 13 : 0);
+}
+
+export function addCardClickHandlers(cards, onClick) {
+    cards.forEach(card => {
+        card.addEventListener('click', () => onClick(card));
+    });
 }
