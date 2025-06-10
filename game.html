@@ -11,31 +11,48 @@
 <body>
     <header>
         <div class="header-title-container">
-            <h1>Dungeon Crawler</h1>
+            <h1>Necroneon Labyrinth</h1>
         </div>
     </header>
+
+    <div id="deck-progress-container">
+        <label for="deck-progress">Cards left:</label>
+        <progress id="deck-progress"></progress>
+        <span id="deck-progress-text"></span>
+    </div>
 
     <div class="game-mechanics-container">
         <div class="card-container"></div>
 
         <div class="button-container">
-            <button id="finish-round-btn">Finish Round</button>
-            <button id="flee-btn">Flee!</button>
+            <button id="finish-round-btn" class="button">Finish Round</button>
+            <button id="flee-btn" class="button">Flee!</button>
+        </div>
+
+        <div class="game-information">
+            <div class="game-status-container">
+                <div class="header-status-info">
+                    <div id="player-info"></div>
+                </div>
+                
+                <div id="weapon-card-container"></div>
+            </div>
+
+            <div id="info-box" class="info-box">
+                Hover over a card to see its effect.
+            </div>
         </div>
     </div>
 
-    <div class="game-status-container">
-        <div class="header-status-info">
-            <div id="player-info"></div>
-        </div>
+    <div id="popup-message" class="popup-message"></div>
 
-        <div id="deck-progress-container" style="margin: 1em 0;">
-            <label for="deck-progress">Cards left:</label>
-                <progress id="deck-progress"></progress>
-            <span id="deck-progress-text"></span>
-        </div>
-
-        <div id="weapon-card-container"></div>
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay" style="display:none;">
+      <div class="modal-content">
+        <h2>Game Over!</h2>
+        <p id="game-over-message"></p>
+        <button id="play-again-btn">Play Again</button>
+      </div>
     </div>
     
 <script type="module" src="main.js"></script>

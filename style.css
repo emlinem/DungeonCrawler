@@ -1,35 +1,51 @@
-:root{
+@font-face {
+    font-family: 'FungiFreak';
+    src: url('fonts/FungiFreak.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
     --card-width: 157px;
     --card-height: 220px;
     --num-cards: 4;
     --card-horizontal-spacing: 100px;
 }
 
-body{
+/* GENERAL LAYOUT */
+body {
     height: 100vh;
     min-width: 700px;
+    background: #000;         /* Black background */
+    color: #fff;              /* Default text white */
 }
 
-main{
-    height:55%;
-    display: flex;
-    justify-content: center;
-    border: 1px solid black;
-}
-
-.header-title-container{
+.header-title-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 45%;
+    height: auto;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
-.h1{
-    margin: 0;
-    padding: 20px;
+h1 {
+    margin: 0 0 4px 0;
+    font-family: 'FungiFreak', sans-serif;
+    font-size: 50px;
+    color: #39ff14; /* Neon green */
+    text-shadow: 0 0 8px #39ff14, 0 0 16px #39ff14;
 }
 
-/* CARD CONTAINER */
+/* GAME MECHANICS LAYOUT */
+.game-mechanics-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 .card-container {
     display: flex;
@@ -38,88 +54,21 @@ main{
     gap: 24px;
     width: 70vw;
     min-width: 700px;
-    padding-top: 30px;
+    padding-top: 20px;
     margin: 0 auto;
 }
 
-.card-pos-a {
-    grid-area: a;
-}
-
-.card-pos-b {
-    grid-area: b;
-}
-
-.card-pos-c {
-    grid-area: c;
-}
-
-.card-pos-d {
-    grid-area: d;
-}
-
-.card-pos-a, .card-pos-b, .card-pos-c, .card-pos-d{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.card{
-    height: var(--card-height);
-    width: var(--card-width);
-    perspective: 1000px;
-    cursor: pointer;
-}
-
-.card-inner{
-    position: relative;
-    width:  100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.card-front, .card-back{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.card-img{
-    height: 100%;
-}
-
-.card-back{
-    transform: rotateY(180deg);
-}
-
-.card:hover .card-inner{
-    transform: scale(1.1);
-    transition: transform 0.3s;
-}
-
-.card-inner.flip-it{
-    transform: rotateY(180deg);
-}
-
-.card.selected {
-    outline: 5px solid red;
-    filter: brightness(1.2);
-}
-
 /* BUTTONS */
-
 .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px 0 0 0;
+    gap: 16px;
+    margin-top: 40px; /* Increased to prevent overlap with cards */
 }
 
-.button{
+.button {
     margin: 0 10px;
     padding: 10px 20px;
     font-size: 16px;
@@ -143,18 +92,92 @@ main{
     pointer-events: none;
 }
 
-/* GAME STATUS */
+#play-again-btn,
+.button {
+    background: #ff00cc;
+    color: #fff;
+    box-shadow: 0 0 8px #ff00cc, 0 0 16px #ff00cc;
+}
+#play-again-btn:hover,
+.button:hover {
+    background: #ff00cc;
+    color: #39ff14;
+    box-shadow: 0 0 16px #39ff14, 0 0 32px #ff00cc;
+}
+
+/* CARD STYLES */
+.card {
+    height: var(--card-height);
+    width: var(--card-width);
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.card-img {
+    height: 100%;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card:hover .card-inner {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+}
+
+.card-inner.flip-it {
+    transform: rotateY(180deg);
+}
+
+.card.selected {
+    filter: brightness(0.7);
+    transform: scale(1.1);
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transition: filter 0.2s, transform 0.2s, opacity 0.2s;
+}
+
+/* GAME STATUS & INFO */
+.game-information {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2em;
+    width: 70vw;
+    min-width: 700px;
+    max-width: 1100px;
+    margin: 20px auto 0 auto;
+    background: none;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 .game-status-container {
     display: flex;
-    justify-content: center;         /* Center horizontally */
-    align-items: center;             /* Center vertically */
-    gap: 2rem;                       /* Space between status items */
-    padding: 16px 32px;
-    margin: 24px auto 0 auto;
-    max-width: 500px;
-    min-width: 300px;
-    font-size: 1.2em;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+    min-width: 200px;
 }
 
 .game-status-container .header-status-info {
@@ -167,33 +190,22 @@ main{
 #player-info {
     font-weight: 500;
     line-height: 1.5;
+    color: #fff;
 }
 
-#deck-progress-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    font-size: 1em;
-}
-
-#deck-progress {
-    height: 1.2em;
-    accent-color: #007bff;
-    background: #444;
-    border-radius: 6px;
-}
-
+/* WEAPON STACK */
 #weapon-card-container {
     position: relative;
-    min-width: 80px;
-    height: 120px;
+    min-width: 60px;
+    height: 90px;
     overflow: visible;
+    margin-top: 0.5em;
 }
 
+#weapon-card-container img,
 .weapon-card-img {
-    width: 80px;
-    height: 120px;
-    border-radius: 8px;
+    width: 40px;
+    height: 60px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     position: absolute;
     top: 0;
@@ -204,4 +216,128 @@ main{
 .weapon-card-img.overlap {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     border: 2px solid #f00;
+}
+
+/* INFO BOX */
+.info-box {
+    min-width: 220px;
+    width: 320px;
+    min-height: 48px;  
+    padding: 0.5em 1em;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #111;
+    color: #fff;
+    border: 1px solid #39ff14;
+    box-shadow: 0 0 8px #39ff1444;
+}
+
+/* PROGRESS BAR */
+#deck-progress-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 0 auto; /* Remove top margin */
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    justify-content: center;
+}
+
+#deck-progress {
+    width: 100%;
+    height: 5px;
+    background-color: #333;
+    border-radius: 6px;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0 1em;
+}
+
+#deck-progress::-webkit-progress-bar {
+    background-color: #333;
+    border-radius: 6px;
+}
+#deck-progress::-webkit-progress-value {
+    background-color: #d32f2f;
+    border-radius: 6px;
+}
+#deck-progress::-moz-progress-bar {
+    background-color: #d32f2f;
+    border-radius: 6px;
+}
+#deck-progress::-ms-fill {
+    background-color: #d32f2f;
+    border-radius: 6px;
+}
+
+#deck-progress-container label,
+#deck-progress-text {
+    color: #00eaff;
+    text-shadow: 0 0 4px #00eaff;
+}
+
+/* POPUP MESSAGE */
+.popup-message {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: #111;
+    color: #39ff14;
+    text-shadow: 0 0 8px #39ff14, 0 0 16px #39ff14;
+    border: 1px solid #39ff14;
+    box-shadow: 0 0 16px #39ff1444;
+    padding: 1em 2em;
+    border-radius: 10px;
+    font-size: 1.3em;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.3s;
+}
+.popup-message.show {
+    opacity: 0.95;
+}
+
+/* MODAL STYLES */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2em 3em;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+}
+
+#play-again-btn {
+    margin-top: 1em;
+    padding: 0.6em 2em;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 6px;
+    background: crimson;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#play-again-btn:hover {
+    background: #a30000;
+}
+
+h2, h3 {
+    color: #00eaff; /* Neon blue */
+    text-shadow: 0 0 8px #00eaff, 0 0 16px #00eaff;
 }

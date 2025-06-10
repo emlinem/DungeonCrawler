@@ -33,6 +33,14 @@ function createCard(cardItem, index) {
     cardInnerElem.appendChild(cardBackElem);
 
     cardElem.appendChild(cardInnerElem);
+    
+    cardElem.addEventListener('mouseenter', () => {
+        document.getElementById('info-box').textContent = getCardExplanation(cardItem);
+    });
+    cardElem.addEventListener('mouseleave', () => {
+        document.getElementById('info-box').textContent = 'Hover over a card to see its effect.';
+    });
+
     return cardElem;
 }
 
@@ -58,4 +66,38 @@ export function addCardClickHandlers(cards, onClick) {
     cards.forEach(card => {
         card.addEventListener('click', () => onClick(card));
     });
+}
+
+export function getCardExplanation(cardObj) {
+    if (cardObj.suit === 'D') {
+        if (isFace(cardObj)) {
+            return `Blacksmith: Removes enemy deterioration from your weapon. If your weapon is in tip-top shape, it gets an upgrade!`;
+        } else {
+            return `Weapon: Pick up a new weapon.`;
+        }
+    } else if (cardObj.suit === 'H') {
+        if (isFace(cardObj)) {
+            return `Merchant: Sell your weapon for a health potion.`;
+        } else {
+            return `Health Potion: Heals you by this card's value (up to max HP).`;
+        }
+    } else if (cardObj.suit === 'S' || cardObj.suit === 'C') {
+        return `Enemy: Battle this enemy to get rid of this card. But watch out, it will attack back!`;
+    }
+    return '';
+}
+
+export function clearCards() {
+    document.querySelectorAll('.card').forEach(card => card.remove());
+}
+
+export function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+export function isFace(cardObj) {
+    return ['J', 'Q', 'K', 'A'].includes(cardObj.rank);
 }
